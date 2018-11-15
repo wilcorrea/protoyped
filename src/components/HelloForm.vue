@@ -1,36 +1,47 @@
 <template>
   <div>
-    <AppForm v-bind="$data" v-model="record" />
+    <AppForm
+      v-bind="$data"
+      v-model="record"
+    />
     <pre>{{ record }}</pre>
   </div>
 </template>
 
 <script>
-import AppForm from "../app/components/AppForm";
-import Category from "../domains/general/category/Category";
+import AppForm from '../app/components/AppForm';
+import Category from '../domains/general/category/Category';
 
 export default {
-  name: "HelloForm",
+  name: 'HelloForm',
   components: {
-    AppForm
+    AppForm,
+  },
+  props: {
+    scope: {
+      type: String,
+    },
   },
   data: () => ({
     record: {},
-    protoype: {}
+    prototype: {},
   }),
   created() {
     // this.$route.params.id
-    this.protoype = Category.build({ scope: "edit" });
+    this.prototype = Category.build({ scope: this.scope });
   },
   mounted() {
+    if (!this.$route.params.id) {
+      return;
+    }
+    const age = () => parseInt(Math.random() * 100, 0);
     window.setTimeout(() => {
       this.record = {
-        name: "William",
-        age: 37,
-        email: "wilcorrea@gmail.com",
-        description: "~"
+        name: 'William',
+        age: age(),
+        email: 'wilcorrea@gmail.com',
       };
-    }, 1000);
-  }
+    }, 500);
+  },
 };
 </script>
