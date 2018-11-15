@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 export default {
   formWidth(formWidth) {
     return this.__setLayout({ formWidth });
@@ -10,5 +11,5 @@ export default {
   },
   gridHidden(gridHidden) {
     return this.__setLayout({ gridHidden });
-  }
+  },
 };
