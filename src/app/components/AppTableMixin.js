@@ -2,41 +2,45 @@ export default {
   props: {
     value: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
-    protoype: {
+    prototype: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
+    id: {
+      type: String,
+      default: 'id',
+    },
   },
   data: () => ({
     records: [],
-    fields: {}
+    fields: {},
   }),
   methods: {
     fieldsRender() {
-      this.fields = this.protoype.fields();
-    }
+      this.fields = this.prototype.fields();
+    },
   },
   watch: {
     value(value) {
       this.records = [...value];
-    }
+    },
   },
   created() {
     this.fieldsRender();
 
-    if (this.protoype.hasHook("created")) {
-      const hook = this.protoype.getHook("created");
+    if (this.prototype.hasHook('created')) {
+      const hook = this.prototype.getHook('created');
       hook.bind(this).call();
     }
-    this.$emit("created");
+    this.$emit('created');
   },
   mounted() {
-    if (this.protoype.hasHook("mounted")) {
-      const hook = this.protoype.getHook("mounted");
+    if (this.prototype.hasHook('mounted')) {
+      const hook = this.prototype.getHook('mounted');
       hook.bind(this).call();
     }
-    this.$emit("mounted");
-  }
+    this.$emit('mounted');
+  },
 };

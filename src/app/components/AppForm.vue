@@ -21,10 +21,13 @@
 </template>
 
 <script type="text/javascript">
-import AppFormMixin from "./AppFormMixin";
+import AppFormMixin from './AppFormMixin';
+
 export default {
-  name: "AppForm",
-  mixins: [AppFormMixin]
+  name: 'AppForm',
+  mixins: [
+    AppFormMixin,
+  ],
 };
 </script>
 
