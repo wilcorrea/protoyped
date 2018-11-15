@@ -1,0 +1,53 @@
+<template>
+  <div class="container">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th>*</th>
+          <th
+            v-for="field in fields"
+            v-show="!field.$layout.gridHidden"
+            v-html="field.$attrs.label"
+            :key="field.$key"
+          />
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(record, key) in records" :key="key">
+          <td>
+            <slot name="options" :record="record"> <a href="">link</a> </slot>
+          </td>
+          <td
+            v-for="field in fields"
+            v-show="!field.$layout.gridHidden"
+            :key="field.$key"
+          >
+            <slot :name="`column-${field.$key}`" :record="record">
+              <span v-html="record[field.$key]" />
+            </slot>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import AppTableMixin from "./AppTableMixin";
+export default {
+  name: "AppTable",
+  mixins: [AppTableMixin]
+};
+</script>
+
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #f0f0f0;
+  padding: 8px;
+}
+</style>
