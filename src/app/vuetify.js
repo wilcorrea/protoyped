@@ -1,17 +1,17 @@
 export default {
   input: {
-    is: "v-text-field"
+    is: 'v-text-field',
   },
   text: {
-    is: "v-textarea"
+    is: 'v-textarea',
   },
   select: {
-    is: "v-select"
+    is: 'v-select',
   },
   file: {
-    is: "input",
+    is: 'input',
     attrs: {
-      type: "file"
-    }
-  }
+      type: 'file',
+    },
+  },
 };

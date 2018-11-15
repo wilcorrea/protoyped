@@ -1,18 +1,11 @@
 <template>
-  <HelloTable />
-  <!-- <HelloForm /> -->
+  <router-view></router-view>
 </template>
 
 <script>
-// import HelloForm from "./components/HelloForm";
-import HelloTable from "./components/HelloTable";
 
 export default {
-  name: "App",
-  components: {
-    HelloTable
-    // HelloForm
-  }
+  name: 'App',
 };
 </script>
 

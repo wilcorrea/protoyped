@@ -1,5 +1,6 @@
-import { components } from "../env";
-import protoype from "./prototype/index";
+/* eslint-disable no-underscore-dangle */
+import { components } from '../env';
+import prototype from './prototype/index';
 
 /**
  * @typedef {Prototype}
@@ -7,46 +8,47 @@ import protoype from "./prototype/index";
 export default class Prototype {
   static components = components;
 
-  static is = "input";
+  static is = 'input';
 
   constructor(options) {
     this.__fields = {};
     this.__hooks = {};
 
-    Object.keys(protoype).forEach(key => this.__load(protoype[key]));
+    Object.keys(prototype).forEach(key => this.__load(prototype[key]));
 
-    if (this.construct && typeof this.construct === "function") {
+    if (this.construct && typeof this.construct === 'function') {
       const { scope } = options;
       this.construct(scope);
       return;
     }
-    throw new Error("Invalid `construct` method on protoype instance");
+    throw new Error('Invalid `construct` method on prototype instance');
   }
 
   static build(options = {}) {
     return new this(options);
   }
 
-  field(name, label = "", is = null, attrs = null, listeners = null) {
+  field(name, label = '', is = null, attrs = null, listeners = null) {
     this.__current = name;
+    let __is = is;
     if (!is) {
-      is = this.constructor.is;
+      __is = this.constructor.is;
     }
-    attrs = Object.assign({ label }, attrs);
-    listeners = Object.assign({}, listeners);
+    const __attrs = Object.assign({ label }, attrs);
+    const __listeners = Object.assign({}, listeners);
     this.__fields[name] = {
       $key: name,
-      $is: "",
+      $is: '',
       $layout: {
         formWidth: 100,
         formHidden: false,
-        gridWidth: "auto",
-        gridHidden: false
+        gridWidth: 'auto',
+        gridHidden: false,
       },
-      $attrs: attrs,
-      $listeners: listeners
+      $attrs: __attrs,
+      $listeners: __listeners,
     };
-    this.__setComponent(is);
+    this.__setComponent(__is);
     return this;
   }
 
@@ -72,7 +74,7 @@ export default class Prototype {
   }
 
   __load(methods) {
-    Object.keys(methods).forEach(method => {
+    Object.keys(methods).forEach((method) => {
       this[method] = methods[method].bind(this);
     });
   }
@@ -95,23 +97,23 @@ export default class Prototype {
   __setLayout(layout) {
     const name = this.__current;
     const field = this.__fields[name];
-    this.__fields[name]["$layout"] = Object.assign(field.$layout, layout);
+    this.__fields[name].$layout = Object.assign(field.$layout, layout);
     return this;
   }
 
   __setAttrs(attrs) {
     const name = this.__current;
     const field = this.__fields[name];
-    this.__fields[name]["$attrs"] = Object.assign(field.$attrs, attrs);
+    this.__fields[name].$attrs = Object.assign(field.$attrs, attrs);
     return this;
   }
 
   __setListeners(listeners) {
     const name = this.__current;
     const field = this.__fields[name];
-    this.__fields[name]["$listeners"] = Object.assign(
+    this.__fields[name].$listeners = Object.assign(
       field.$listeners,
-      listeners
+      listeners,
     );
     return this;
   }

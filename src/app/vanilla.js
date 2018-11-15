@@ -1,11 +1,11 @@
-import Vue from "vue";
+import Vue from 'vue';
 
 const basic = template => ({
   inheritAttrs: false,
-  props: ["label", "value"],
+  props: ['label', 'value'],
   computed: {
-    inputListeners: function() {
-      var vm = this;
+    inputListeners() {
+      const vm = this;
       // `Object.assign` merges objects together to form a new object
       return Object.assign(
         {},
@@ -15,52 +15,52 @@ const basic = template => ({
         // behavior of some listeners.
         {
           // This ensures that the component works with v-model
-          input: function(event) {
-            vm.$emit("input", event.target.value);
-          }
-        }
+          input(event) {
+            vm.$emit('input', event.target.value);
+          },
+        },
       );
-    }
+    },
   },
-  template: template
+  template,
 });
 
 Vue.component(
-  "basic-input",
+  'basic-input',
   basic(`<div class="native">
 <label>{{ label }}</label>
 <input v-bind="$attrs" v-bind:value="value" v-on="inputListeners">
-</div>`)
+</div>`),
 );
 Vue.component(
-  "basic-textarea",
+  'basic-textarea',
   basic(`<div class="native">
 <label>{{ label }}</label>
 <textarea v-bind="$attrs" v-bind:value="value" v-on="inputListeners"></textarea>
-</div>`)
+</div>`),
 );
 Vue.component(
-  "basic-select",
+  'basic-select',
   basic(`<div class="native">
 <label>{{ label }}</label>
 <select v-bind="$attrs" v-bind:value="value" v-on="inputListeners"></select>
-</div>`)
+</div>`),
 );
 
 export default {
   input: {
-    is: "basic-input"
+    is: 'basic-input',
   },
   text: {
-    is: "basic-textarea"
+    is: 'basic-textarea',
   },
   select: {
-    is: "basic-select"
+    is: 'basic-select',
   },
   file: {
-    is: "basic-input",
+    is: 'basic-input',
     attrs: {
-      type: "file"
-    }
-  }
+      type: 'file',
+    },
+  },
 };

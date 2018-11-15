@@ -1,4 +1,5 @@
-import Prototype from "../../../app/Prototype";
+/* eslint-disable no-alert,func-names */
+import Prototype from '../../../app/Prototype';
 
 /**
  * @typedef {Category}
@@ -6,33 +7,33 @@ import Prototype from "../../../app/Prototype";
 export default class Category extends Prototype {
   // static driver = "rest";
 
-  construct(scope) {
+  construct() {
     /** @fields */
 
-    this.field("name", "Personagem");
+    this.field('name', 'Personagem');
 
-    this.field("age", "Idade")
-      .type("number")
+    this.field('age', 'Idade')
+      .type('number')
       .default(1)
       .formWidth(50)
-      .on("input", function() {
+      .on('input', function () {
         this.fields.email.$layout.formHidden = this.record.age < 12;
       });
 
-    this.field("email", "E-mail")
+    this.field('email', 'E-mail')
       .email()
       .formWidth(50)
       .gridHidden(true)
-      .on("input", function() {
+      .on('input', function () {
         this.record.description = this.record.email;
       });
 
-    this.field("description", "Descrição")
+    this.field('description', 'Descrição')
       .text()
       .gridHidden(true)
-      .on("blur", () => window.alert("Ha!"));
+      .on('blur', () => window.alert('Ha!'));
 
-    this.hook("mounted", function() {
+    this.hook('mounted', () => {
       // window.alert("Mounted!");
     });
   }
