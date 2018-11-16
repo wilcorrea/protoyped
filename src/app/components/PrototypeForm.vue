@@ -21,7 +21,7 @@
 </template>
 
 <script type="text/javascript">
-import AppFormMixin from './AppFormMixin';
+import AppFormMixin from './PrototypeFormMixin';
 
 export default {
   name: 'AppForm',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppForm
+    <PrototypeForm
       v-bind="$data"
       v-model="record"
     />
@@ -8,18 +8,20 @@
   </div>
 </template>
 
-<script>
-import AppForm from '../app/components/AppForm';
+<script type="text/javascript">
+import PrototypeForm from '../app/components/PrototypeForm';
 import Category from '../domains/general/category/Category';
+import records from './data';
 
 export default {
   name: 'HelloForm',
   components: {
-    AppForm,
+    PrototypeForm,
   },
   props: {
     scope: {
       type: String,
+      default: '',
     },
   },
   data: () => ({
@@ -27,20 +29,14 @@ export default {
     prototype: {},
   }),
   created() {
-    // this.$route.params.id
     this.prototype = Category.build({ scope: this.scope });
   },
   mounted() {
     if (!this.$route.params.id) {
       return;
     }
-    const age = () => parseInt(Math.random() * 100, 0);
     window.setTimeout(() => {
-      this.record = {
-        name: 'William',
-        age: age(),
-        email: 'wilcorrea@gmail.com',
-      };
+      this.record = records[0];
     }, 500);
   },
 };

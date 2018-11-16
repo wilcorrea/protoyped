@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import Prototype from '../Prototype';
+
 export default {
   props: {
     value: {
@@ -6,7 +8,7 @@ export default {
       default: () => ({}),
     },
     prototype: {
-      type: Object,
+      type: Prototype,
       required: true,
     },
   },
@@ -51,21 +53,24 @@ export default {
       },
       deep: true,
     },
+    /**
+     * @param {String} hook
+     */
+    hookTrigger(hook) {
+      const hooks = this.prototype.hooks();
+      if (hooks[hook]) {
+        hooks[hook].bind(this).call();
+      }
+      this.$emit(hook);
+    },
   },
   created() {
     this.fieldsRender();
     this.recordRender();
-    if (this.prototype.hasHook('created')) {
-      const hook = this.prototype.getHook('created');
-      hook.bind(this).call();
-    }
-    this.$emit('created');
+
+    this.hookTrigger('created');
   },
   mounted() {
-    if (this.prototype.hasHook('mounted')) {
-      const hook = this.prototype.getHook('mounted');
-      hook.bind(this).call();
-    }
-    this.$emit('mounted');
+    this.hookTrigger('mounted');
   },
 };

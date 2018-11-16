@@ -1,24 +1,25 @@
 <template>
   <div>
-    <AppTable
+    <PrototypeTable
       v-bind="$data"
       v-model="records"
     >
       <!--<div slot="options" slot-scope="scope">{{ scope.record["id"] }}</div>-->
-    </AppTable>
+    </PrototypeTable>
     <pre>{{ records }}</pre>
   </div>
 </template>
 
-<script>
+<script type="text/javascript">
 /* eslint-disable import/extensions, import/no-unresolved */
-import AppTable from 'src/app/components/AppTable';
+import PrototypeTable from 'src/app/components/PrototypeTable';
 import Category from 'src/domains/general/category/Category';
+import records from './data';
 
 export default {
   name: 'HelloTable',
   components: {
-    AppTable,
+    PrototypeTable,
   },
   data: () => ({
     records: [],
@@ -28,52 +29,8 @@ export default {
     this.prototype = Category.build({ scope: 'index' });
   },
   mounted() {
-    const age = () => parseInt(Math.random() * 100, 0);
     window.setTimeout(() => {
-      this.records = [
-        {
-          id: 1,
-          name: 'William 1',
-          age: age(),
-          email: 'wilcorrea@gmail.com',
-          description: '~',
-        },
-        {
-          id: 2,
-          name: 'William 2',
-          age: age(),
-          email: 'wilcorrea@gmail.com',
-          description: '~',
-        },
-        {
-          id: 3,
-          name: 'William 3',
-          age: age(),
-          email: 'wilcorrea@gmail.com',
-          description: '~',
-        },
-        {
-          id: 4,
-          name: 'William 4',
-          age: age(),
-          email: 'wilcorrea@gmail.com',
-          description: '~',
-        },
-        {
-          id: 5,
-          name: 'William 5',
-          age: age(),
-          email: 'wilcorrea@gmail.com',
-          description: '~',
-        },
-        {
-          id: 6,
-          name: 'William 6',
-          age: age(),
-          email: 'wilcorrea@gmail.com',
-          description: '~',
-        },
-      ];
+      this.records = records;
     }, 1000);
   },
 };

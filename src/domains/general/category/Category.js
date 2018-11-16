@@ -1,5 +1,5 @@
-/* eslint-disable no-alert,func-names */
-import Prototype from '../../../app/Prototype';
+/* eslint-disable no-alert,func-names, import/extensions, import/no-unresolved */
+import Prototype from 'src/app/Prototype';
 
 /**
  * @typedef {Category}

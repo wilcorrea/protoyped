@@ -1,120 +1,58 @@
 /* eslint-disable no-underscore-dangle */
-import { components } from '../env';
-import prototype from './prototype/index';
+import PrototypeBase from './PrototypeBase';
 
 /**
- * @typedef {Prototype}
+ * @typedef {PrototypeBase}
  */
-export default class Prototype {
-  static components = components;
-
-  static is = 'input';
-
-  constructor(options) {
-    this.__fields = {};
-    this.__hooks = {};
-
-    Object.keys(prototype).forEach(key => this.__load(prototype[key]));
-
-    if (this.construct && typeof this.construct === 'function') {
-      const { scope } = options;
-      this.construct(scope);
-      return;
-    }
-    throw new Error('Invalid `construct` method on prototype instance');
+export default class Prototype extends PrototypeBase {
+  input() {
+    return this.setComponent('input');
   }
 
-  static build(options = {}) {
-    return new this(options);
+  text() {
+    return this.setComponent('text');
   }
 
-  field(name, label = '', is = null, attrs = null, listeners = null) {
-    this.__current = name;
-    let __is = is;
-    if (!is) {
-      __is = this.constructor.is;
-    }
-    const __attrs = Object.assign({ label }, attrs);
-    const __listeners = Object.assign({}, listeners);
-    this.__fields[name] = {
-      $key: name,
-      $is: '',
-      $layout: {
-        formWidth: 100,
-        formHidden: false,
-        gridWidth: 'auto',
-        gridHidden: false,
-      },
-      $attrs: __attrs,
-      $listeners: __listeners,
-    };
-    this.__setComponent(__is);
-    return this;
+  select() {
+    return this.setComponent('select');
   }
 
-  hook(name, handler) {
-    this.__hooks[name] = handler;
-    return this;
+  file() {
+    return this.setComponent('file');
   }
 
-  hasHook(name) {
-    return !!this.__hooks[name];
+  email() {
+    return this.setComponent('input');
   }
 
-  getHook(name) {
-    return this.__hooks[name];
+
+  formWidth(formWidth) {
+    return this.setLayout({ formWidth });
   }
 
-  fields() {
-    return this.__fields;
+  formHidden(formHidden) {
+    return this.setLayout({ formHidden });
   }
 
-  hooks() {
-    return this.__hooks;
+  gridWidth(gridWidth) {
+    return this.setLayout({ gridWidth });
   }
 
-  __load(methods) {
-    Object.keys(methods).forEach((method) => {
-      this[method] = methods[method].bind(this);
-    });
+  gridHidden(gridHidden) {
+    return this.setLayout({ gridHidden });
   }
 
-  __setComponent(component) {
-    const properties = this.constructor.components[component];
-    this.__setIs(properties.is);
-    this.__setAttrs(properties.attrs);
-    this.__setListeners(properties.listeners);
-    return this;
+  type(type) {
+    return this.setAttrs({ type });
   }
 
-  __setIs(component) {
-    const name = this.__current;
-    const field = this.__fields[name];
-    field.$is = component;
-    return this;
+  default(value) {
+    return this.setAttrs({ value });
   }
 
-  __setLayout(layout) {
-    const name = this.__current;
-    const field = this.__fields[name];
-    this.__fields[name].$layout = Object.assign(field.$layout, layout);
-    return this;
-  }
-
-  __setAttrs(attrs) {
-    const name = this.__current;
-    const field = this.__fields[name];
-    this.__fields[name].$attrs = Object.assign(field.$attrs, attrs);
-    return this;
-  }
-
-  __setListeners(listeners) {
-    const name = this.__current;
-    const field = this.__fields[name];
-    this.__fields[name].$listeners = Object.assign(
-      field.$listeners,
-      listeners,
-    );
-    return this;
+  on(event, callable) {
+    const listener = {};
+    listener[event] = callable;
+    return this.setListeners(listener);
   }
 }
